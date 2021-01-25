@@ -1,0 +1,67 @@
+﻿<Window x:Class="SfDataGridDemo.MainWindow"
+                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                             xmlns:local="clr-namespace:SfDataGridDemo"
+                             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+                             Icon="App.ico">
+
+    <Window.DataContext>
+        <local:ProductSalesDetailsCollection />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <Style x:Key="ApplyCellStyle" TargetType="syncfusion:GridCell">
+            <Style.Resources>
+                <ResourceDictionary>
+                    <Style TargetType="TextBlock" />
+                </ResourceDictionary>
+            </Style.Resources>
+            <Setter Property="Foreground" Value="Blue" />
+            <Setter Property="Background" Value="Yellow"/>
+        </Style>
+        <local:UnboundCellStyleConverter x:Key="unboundCellStyleConverter"/>
+    </Window.Resources>
+
+    <Grid>
+        <syncfusion:SfDataGrid x:Name="dataGrid"    
+                               AutoGenerateColumns="False"
+                               ColumnSizer="Star"
+                               AllowEditing="True"
+                               ItemsSource="{Binding ProductInfo}">
+            <syncfusion:SfDataGrid.Columns>
+                <syncfusion:GridTextColumn    HeaderText="Product"             MappingName="Product" />
+                <syncfusion:GridTextColumn    HeaderText="Country"             MappingName="Country" />
+                <syncfusion:GridTextColumn    HeaderText="State"               MappingName="State" />
+                <syncfusion:GridTextColumn    HeaderText="Price Per Quantity"  MappingName="Amount" 
+                                              TextAlignment="Right"/>
+                <syncfusion:GridTextColumn    HeaderText="Quantity"            MappingName="Quantity"
+                                              TextAlignment="Right"/>
+                <syncfusion:GridPercentColumn HeaderText="Discount"            MappingName="Discount"
+                                              PercentDecimalDigits="0"         TextAlignment="Right"/>
+
+                <!--  UnBoundColumn with Expressions  -->
+                <syncfusion:GridUnBoundColumn Width="150"                      AllowEditing="False"
+                                              Expression="Quantity*Amount"  
+                                              HeaderText="Grand Total"         MappingName="GrandTotal"
+                                              TextAlignment="Right" >
+                <syncfusion:GridUnBoundColumn.CellStyle>
+                        <Style TargetType="syncfusion:GridCell">
+                            <Setter  Property="Foreground"  Value="{Binding   RelativeSource={RelativeSource Self}, Converter={StaticResource unboundCellStyleConverter}}" />
+                        </Style>
+                    </syncfusion:GridUnBoundColumn.CellStyle>
+                </syncfusion:GridUnBoundColumn>
+
+                <syncfusion:GridUnBoundColumn Width="150"                      AllowEditing="False"
+                                              Expression="Amount*Discount/100"
+                                              CellStyle="{StaticResource ApplyCellStyle}" 
+                                              HeaderText="Discount Amount"     MappingName="DiscountAmount"
+                                              TextAlignment="Right" />
+
+                <syncfusion:GridUnBoundColumn Width="150"                      AllowEditing="False"
+                                              Expression="((Quantity*Amount) - (Amount*Discount/100))"
+                                              HeaderText="Total Price"         MappingName="TotalPrice" 
+                                              TextAlignment="Right" />               
+            </syncfusion:SfDataGrid.Columns>
+        </syncfusion:SfDataGrid>        
+    </Grid>
+</Window>
