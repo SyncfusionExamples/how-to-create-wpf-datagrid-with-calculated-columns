@@ -162,5 +162,7 @@ Take a moment to peruse the [documentation](https://help.syncfusion.com/wpf/data
 
 Please refer this [link](https://www.syncfusion.com/wpf-ui-controls/datagrid) to know about the essential features of Syncfusion WPF DataGrid.
 
+KB article - [How to create wpf datagrid with calculated columns (unbound columns)?](https://www.syncfusion.com/kb/12312/how-to-create-wpf-datagrid-sfdatagrid-with-calculated-columns-unbound-columns)
+
 ## Requirements to run the demo
 Visual Studio 2015 and above versions
